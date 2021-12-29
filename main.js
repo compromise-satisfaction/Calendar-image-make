@@ -21,16 +21,36 @@ function Game_load(width,height){
        var Text = [];
        var Text_length;
        var Text_datas = {
-         x:0,
-         y:0,
+         x:10,
+         y:10,
          カラー:"",
          フォント:"60px monospace"
        };
-       Text_datas.テキスト = new Date().getFullYear() + "年度 " + (new Date().getMonth() + 1) + "月";
+
+
+       var Monday = new Date();
+
+       switch (new Date().getDay()){
+         case 0:
+            Monday.setDate(Monday.getDate() - 6);
+            break;
+         case 1:
+            break;
+         case 2:
+         case 3:
+         case 4:
+         case 5:
+         case 6:
+            Monday.setDate(Monday.getDate() - new Date().getDay() + 1);
+            break;
+       };
+       console.log(Monday);
+
+       Text_datas.テキスト = "現在開発中" + new Date().getFullYear() + "年度 " + (new Date().getMonth() + 1) + "月";
        Texts(Text_datas);
 
        for(var I = 0; I < Calendar_datas.length; I++){
-         Text_datas.y = 60 + I * 120;
+         Text_datas.y += 120;
          if(Calendar_datas[I][2]==true) Text_datas.テキスト = Calendar_datas[I][1];
          else Text_datas.テキスト = Calendar_datas[I][0].slice(11,-3) + " " + Calendar_datas[I][1];
          Texts(Text_datas);
