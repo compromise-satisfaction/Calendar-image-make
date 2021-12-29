@@ -3,36 +3,36 @@ enchant();
 var Calendar_datas = [];
 
 function Game_load(width,height){
-  var core = new Core(width, height);
+  var core = new Core(width,height);
   core.fps = 30;
   core.onload = function(){
     var StartScene = function(){
        var scene = new Scene();
 
-       var Image_datas = {
-         width:900,
-         height:1600,
-         url:"カレンダー枠.png"
-       };
-
-       var Text_datas = {
-         x:0,
-         y:0,
-         カラー:"",
-         フォント:"30px monospace"
-       };
-
        var Image = [];
        var Image_length;
-
+       var Image_datas = {
+         width:width,
+         height:height,
+         url:"カレンダー枠.png"
+       };
        Images(Image_datas);
 
        var Text = [];
        var Text_length;
+       var Text_datas = {
+         x:0,
+         y:0,
+         カラー:"",
+         フォント:"60px monospace"
+       };
+       Text_datas.テキスト = new Date().getFullYear() + "年度 " + (new Date().getMonth() + 1) + "月";
+       Texts(Text_datas);
 
        for(var I = 0; I < Calendar_datas.length; I++){
-         Text_datas.y = I*60;
-         Text_datas.テキスト = Calendar_datas[I][0] + " " + Calendar_datas[I][1];
+         Text_datas.y = 60 + I * 120;
+         if(Calendar_datas[I][2]==true) Text_datas.テキスト = Calendar_datas[I][1];
+         else Text_datas.テキスト = Calendar_datas[I][0].slice(11,-3) + " " + Calendar_datas[I][1];
          Texts(Text_datas);
        };
 
