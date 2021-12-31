@@ -86,7 +86,7 @@ function Game_load(width,height){
          Monday.setDate(Monday.getDate()+1);
        };
 
-       var B_A = true;
+       var B_A = 1;
        var Event_length = 0;
 
        var Text_Day_datas = {
@@ -106,14 +106,14 @@ function Game_load(width,height){
 
        for(var I = 0; I < Days_texts.length; I++){
          ToDay = false;
-         if(B_A){
+         if(B_A==1){
            if(Days_texts[I].getDate()==1){
              Text_datas.透明度 = 1;
              Text_Day_datas.透明度 = 1;
-             B_A = false;
+             B_A = 2;
            };
          }
-         else{
+         if(B_A>1){
            Text_Day_datas.x = Text_datas.x;
            Text_Day_datas.y = Text_datas.y;
            for(var J = Event_length; J < Calendar_datas.length; J++){
@@ -146,8 +146,11 @@ function Game_load(width,height){
              Text_Day_datas.カラー = "black";
            };
            if(Days_texts[I].getDate()==1){
-             Text_datas.透明度 = 0.5;
-             Text_Day_datas.透明度 = 0.5;
+             if(B_A==2) B_A = 3;
+             else{
+               Text_datas.透明度 = 0.5;
+               Text_Day_datas.透明度 = 0.5;
+             };
            };
          };
          if(I%7==6&&Text_datas.カラー!="#00ff00") Text_datas.カラー = "red";
