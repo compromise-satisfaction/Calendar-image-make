@@ -103,6 +103,11 @@ function Game_load(width,height){
              if(new Date(Calendar_datas[J][0]).getDate()==Days_texts[I].getDate()){
                Text_Day_datas.y += 20;
                Text_Day_datas.テキスト = Calendar_datas[J][1];
+               if(Calendar_datas[J][2]!="現在時刻") Text_Day_datas.カラー = "black";
+               else{
+                 Text_Day_datas.カラー = "green";
+                 Text_Day_datas.テキスト = "今日";
+               };
                Texts(Text_Day_datas);
              };
            };
