@@ -9,6 +9,9 @@ function Game_load(width,height){
     var StartScene = function(){
        var scene = new Scene();
 
+       var Now = new Date();
+       var Monday = new Date(Now);
+
        var Image = [];
        var Image_length;
        var Image_datas = {
@@ -27,27 +30,87 @@ function Game_load(width,height){
          フォント:"60px monospace"
        };
 
-
-       var Monday = new Date();
-
-       switch (new Date().getDay()){
-         case 0:
-            Monday.setDate(Monday.getDate() - 6);
-            break;
-         case 1:
-            break;
-         case 2:
-         case 3:
-         case 4:
-         case 5:
-         case 6:
-            Monday.setDate(Monday.getDate() - new Date().getDay() + 1);
-            break;
-       };
-       console.log(Monday);
-
-       Text_datas.テキスト = "現在開発中" + new Date().getFullYear() + "年度 " + (new Date().getMonth() + 1) + "月";
+       Text_datas.テキスト = new Date(Now).getFullYear() + "年 " + (new Date(Now).getMonth() + 1) + "月 開発中";
        Texts(Text_datas);
+
+       var Days_texts = "月火水木金土日";
+       Text_datas.フォント = "100px monospace";
+       Text_datas.x = 0;
+       Text_datas.y = 100;
+
+       for(var I = 0; I < Days_texts.length; I++){
+         Text_datas.テキスト = Days_texts[I];
+         switch (Text_datas.テキスト) {
+           case "土":
+            Text_datas.カラー = "blue";
+            break;
+           case "日":
+            Text_datas.カラー = "red";
+            break;
+         };
+         Texts(Text_datas);
+         Text_datas.x += 100;
+       };
+
+       Text_datas.フォント = "20px monospace";
+       Text_datas.カラー = "black";
+       Text_datas.x = 10;
+       Text_datas.y = 210;
+
+       Monday.setDate(1);
+
+       Days_texts = [];
+
+       var Last_month = new Date(Monday);
+       Last_month.setDate(2 - Monday.getDay());
+
+       for(var I = 0; I < Monday.getDay(); I++){
+         Days_texts[Days_texts.length] = Last_month.getDate();
+         Last_month.setDate(Last_month.getDate() + 1);
+       };
+
+       Monday.setDate(2);
+
+       while(Monday.getDate()!=1){
+         Days_texts[Days_texts.length] = Monday.getDate();
+         Monday.setDate(Monday.getDate()+1);
+       };
+
+       var J = 0;
+
+       for(var I = Days_texts.length; I < 35; I++){
+         J++;
+         Days_texts[I] = J;
+       };
+
+       var B_A = true;
+
+       Text_datas.透明度 = 0.2;
+
+
+       for(var I = 0; I < Days_texts.length; I++){
+         if(B_A){
+           if(Days_texts[I]==1){
+             Text_datas.透明度 = 1;
+             B_A = false;
+           };
+         }
+         else{
+           if(Days_texts[I]==new Date(Now).getDate()) Text_datas.カラー = "green";
+           else Text_datas.カラー = "black";
+           if(Days_texts[I]==1){
+             Text_datas.透明度 = 0.2;
+           };
+         };
+         if(I%7==6&&Text_datas.カラー!="green") Text_datas.カラー = "red";
+         Text_datas.テキスト = Days_texts[I];
+         Texts(Text_datas);
+         Text_datas.x += 100;
+         if(I%7==6){
+           Text_datas.x = 10;
+           Text_datas.y += 100;
+         };
+       };
 
        for(var I = 0; I < Calendar_datas.length; I++){
          Text_datas.y += 120;
@@ -62,9 +125,10 @@ function Game_load(width,height){
          Text[Text_length]._element = document.createElement("innerHTML");
          Text[Text_length]._style.font  = Datas.フォント;
          Text[Text_length]._element.textContent = Datas.テキスト;
-         Text[Text_length]._element.color = Datas.カラー;
+         Text[Text_length]._style.color = Datas.カラー;
          Text[Text_length].x = Datas.x;
          Text[Text_length].y = Datas.y;
+         Text[Text_length].opacity = Datas.透明度;
          scene.addChild(Text[Text_length]);
        };
 
