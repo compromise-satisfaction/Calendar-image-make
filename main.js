@@ -91,7 +91,16 @@ function Game_load(width,height){
        Text_datas.透明度 = 0.5;
        Text_Day_datas.透明度 = 0.5;
 
+       var ToDay = false;
+
+       Image_datas = {
+         width:100,
+         height:100,
+         url:"前後月.png"
+       };
+
        for(var I = 0; I < Days_texts.length; I++){
+         ToDay = false;
          if(B_A){
            if(Days_texts[I].getDate()==1){
              Text_datas.透明度 = 1;
@@ -112,12 +121,22 @@ function Game_load(width,height){
                if(new Date(Calendar_datas[J][0]).getMonth() == new Date(Now).getMonth()){
                  if(new Date(Calendar_datas[J][0]).getDate() == new Date(Now).getDate()){
                    if(Calendar_datas[J][2]=="現在時刻") Text_Day_datas.テキスト = "今日";
-                   Text_datas.カラー = "green";
-                   Text_Day_datas.カラー = "green";
-                 };
-               };
-             };
+                   Text_datas.カラー = "#00ff00";
+                   Text_Day_datas.カラー = "#00ff00";
+                   ToDay = true;
+                 }
+                 else ToDay = false;
+               }
+               else ToDay = false;
+             }
+             else ToDay = false;
              Event_length++;
+             if(ToDay&&Image_datas.url=="前後月.png"){
+               Image_datas.x = Text_datas.x - 10;
+               Image_datas.y = Text_datas.y - 10;
+               Image_datas.url = "今日.png";
+               Images(Image_datas);
+             };
              Texts(Text_Day_datas);
              Text_Day_datas.カラー = "black";
            };
@@ -126,9 +145,13 @@ function Game_load(width,height){
              Text_Day_datas.透明度 = 0.5;
            };
          };
-         if(I%7==6&&Text_datas.カラー!="green") Text_datas.カラー = "red";
-         if(I%7==5&&Text_datas.カラー!="green") Text_datas.カラー = "blue";
+         if(I%7==6&&Text_datas.カラー!="#00ff00") Text_datas.カラー = "red";
+         if(I%7==5&&Text_datas.カラー!="#00ff00") Text_datas.カラー = "blue";
          Text_datas.テキスト = Days_texts[I].getDate();
+         Image_datas.x = Text_datas.x - 10;
+         Image_datas.y = Text_datas.y - 10;
+         Image_datas.url = "前後月.png";
+         if(Text_datas.透明度 == 0.5) Images(Image_datas);
          Texts(Text_datas);
          Text_datas.カラー = "black";
          Text_datas.x += 100;
