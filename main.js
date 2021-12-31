@@ -84,11 +84,12 @@ function Game_load(width,height){
        var B_A = true;
        var Event_length = 0;
 
-       Text_datas.透明度 = 0.2;
-
        var Text_Day_datas = {
          フォント:"20px ゴシック"
        };
+
+       Text_datas.透明度 = 0.5;
+       Text_Day_datas.透明度 = 0.5;
 
        for(var I = 0; I < Days_texts.length; I++){
          if(B_A){
@@ -107,28 +108,29 @@ function Game_load(width,height){
              if(new Date(Calendar_datas[J][0]).getDate() != Days_texts[I].getDate()) continue;
              Text_Day_datas.y += 20;
              Text_Day_datas.テキスト = Calendar_datas[J][1];
-             if(Calendar_datas[J][2]=="現在時刻"){
-               Text_Day_datas.カラー = "green";
-               Text_Day_datas.テキスト = "今日";
-               Text_datas.カラー = Text_Day_datas.カラー;
-             }
-             else{
-               Text_Day_datas.カラー = "black";
-               Text_datas.カラー = Text_Day_datas.カラー;
+             if(new Date(Calendar_datas[J][0]).getFullYear() == new Date(Now).getFullYear()){
+               if(new Date(Calendar_datas[J][0]).getMonth() == new Date(Now).getMonth()){
+                 if(new Date(Calendar_datas[J][0]).getDate() == new Date(Now).getDate()){
+                   if(Calendar_datas[J][2]=="現在時刻") Text_Day_datas.テキスト = "今日";
+                   Text_datas.カラー = "green";
+                   Text_Day_datas.カラー = "green";
+                 };
+               };
              };
              Event_length++;
              Texts(Text_Day_datas);
+             Text_Day_datas.カラー = "black";
            };
            if(Days_texts[I].getDate()==1){
-             Text_datas.透明度 = 0.2;
-             Text_Day_datas.透明度 = 0.2;
+             Text_datas.透明度 = 0.5;
+             Text_Day_datas.透明度 = 0.5;
            };
          };
-         if(I%7!=5&&I%7!=6&&Text_datas.カラー!="green") Text_datas.カラー = "break";
          if(I%7==6&&Text_datas.カラー!="green") Text_datas.カラー = "red";
          if(I%7==5&&Text_datas.カラー!="green") Text_datas.カラー = "blue";
          Text_datas.テキスト = Days_texts[I].getDate();
          Texts(Text_datas);
+         Text_datas.カラー = "black";
          Text_datas.x += 100;
          if(I%7==6){
            Text_datas.x = 10;
