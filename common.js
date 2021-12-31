@@ -71,7 +71,7 @@ $(function(){
 
   //ゲーム内の画面サイズ
   var gameWidth = 700;
-  var gameHeight = 700;
+  var gameHeight = 800;
 
   //回転時の処理
   var orientationChange = function(){

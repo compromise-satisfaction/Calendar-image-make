@@ -30,13 +30,13 @@ function Game_load(width,height){
          フォント:"60px monospace"
        };
 
-       Text_datas.テキスト = new Date(Now).getFullYear() + "年 " + (new Date(Now).getMonth() + 1) + "月 開発中";
+       Text_datas.テキスト = new Date(Now).getFullYear() + "年 " + (new Date(Now).getMonth() + 1) + "月";
        Texts(Text_datas);
 
        var Days_texts = "月火水木金土日";
-       Text_datas.フォント = "100px monospace";
+       Text_datas.フォント = "100px ゴシック";
        Text_datas.x = 0;
-       Text_datas.y = 100;
+       Text_datas.y = 85;
 
        for(var I = 0; I < Days_texts.length; I++){
          Text_datas.テキスト = Days_texts[I];
@@ -52,7 +52,7 @@ function Game_load(width,height){
          Text_datas.x += 100;
        };
 
-       Text_datas.フォント = "20px monospace";
+       Text_datas.フォント = "20px ゴシック";
        Text_datas.カラー = "black";
        Text_datas.x = 10;
        Text_datas.y = 210;
@@ -76,48 +76,57 @@ function Game_load(width,height){
          Monday.setDate(Monday.getDate()+1);
        };
 
-       for(var I = Days_texts.length; I < 35; I++){
+       for(var I = Days_texts.length; I < 42; I++){
          Days_texts[Days_texts.length] = new Date(Monday);
          Monday.setDate(Monday.getDate()+1);
        };
 
        var B_A = true;
+       var Event_length = 0;
 
        Text_datas.透明度 = 0.2;
 
        var Text_Day_datas = {
-         フォント:"20px monospace"
+         フォント:"20px ゴシック"
        };
 
        for(var I = 0; I < Days_texts.length; I++){
          if(B_A){
            if(Days_texts[I].getDate()==1){
              Text_datas.透明度 = 1;
+             Text_Day_datas.透明度 = 1;
              B_A = false;
            };
          }
          else{
-           for(var J = 0; J < Calendar_datas.length; J++){
-             Text_Day_datas.x = Text_datas.x;
-             Text_Day_datas.y = Text_datas.y + 10;
-             if(new Date(Calendar_datas[J][0]).getDate()==Days_texts[I].getDate()){
-               Text_Day_datas.y += 20;
-               Text_Day_datas.テキスト = Calendar_datas[J][1];
-               if(Calendar_datas[J][2]!="現在時刻") Text_Day_datas.カラー = "black";
-               else{
-                 Text_Day_datas.カラー = "green";
-                 Text_Day_datas.テキスト = "今日";
-               };
-               Texts(Text_Day_datas);
+           Text_Day_datas.x = Text_datas.x;
+           Text_Day_datas.y = Text_datas.y;
+           for(var J = Event_length; J < Calendar_datas.length; J++){
+             if(new Date(Calendar_datas[J][0]).getFullYear() != Days_texts[I].getFullYear()) continue;
+             if(new Date(Calendar_datas[J][0]).getMonth() != Days_texts[I].getMonth()) continue;
+             if(new Date(Calendar_datas[J][0]).getDate() != Days_texts[I].getDate()) continue;
+             Text_Day_datas.y += 20;
+             Text_Day_datas.テキスト = Calendar_datas[J][1];
+             if(Calendar_datas[J][2]=="現在時刻"){
+               Text_Day_datas.カラー = "green";
+               Text_Day_datas.テキスト = "今日";
+               Text_datas.カラー = Text_Day_datas.カラー;
+             }
+             else{
+               Text_Day_datas.カラー = "black";
+               Text_datas.カラー = Text_Day_datas.カラー;
              };
+             Event_length++;
+             Texts(Text_Day_datas);
            };
-           if(Days_texts[I].getDate()==new Date(Now).getDate()) Text_datas.カラー = "green";
-           else Text_datas.カラー = "black";
            if(Days_texts[I].getDate()==1){
              Text_datas.透明度 = 0.2;
+             Text_Day_datas.透明度 = 0.2;
            };
          };
+         if(I%7!=5&&I%7!=6&&Text_datas.カラー!="green") Text_datas.カラー = "break";
          if(I%7==6&&Text_datas.カラー!="green") Text_datas.カラー = "red";
+         if(I%7==5&&Text_datas.カラー!="green") Text_datas.カラー = "blue";
          Text_datas.テキスト = Days_texts[I].getDate();
          Texts(Text_datas);
          Text_datas.x += 100;
