@@ -61,10 +61,15 @@ function Game_load(width,height){
 
        Days_texts = [];
 
-       var Last_month = new Date(Monday);
-       Last_month.setDate(2 - Monday.getDay());
+       var Get_day;
 
-       for(var I = 0; I < Monday.getDay(); I++){
+       if(Monday.getDay()==0) Get_day = 7;
+       else Get_day =Monday.getDay();
+
+       var Last_month = new Date(Monday);
+       Last_month.setDate(2 - Get_day);
+
+       for(var I = 0; I < Get_day; I++){
          Days_texts[Days_texts.length] = new Date(Last_month);
          Last_month.setDate(Last_month.getDate() + 1);
        };
