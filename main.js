@@ -65,58 +65,61 @@ function Game_load(width,height){
        Last_month.setDate(2 - Monday.getDay());
 
        for(var I = 0; I < Monday.getDay(); I++){
-         Days_texts[Days_texts.length] = Last_month.getDate();
+         Days_texts[Days_texts.length] = new Date(Last_month);
          Last_month.setDate(Last_month.getDate() + 1);
        };
 
        Monday.setDate(2);
 
        while(Monday.getDate()!=1){
-         Days_texts[Days_texts.length] = Monday.getDate();
+         Days_texts[Days_texts.length] = new Date(Monday);
          Monday.setDate(Monday.getDate()+1);
        };
 
-       var J = 0;
-
        for(var I = Days_texts.length; I < 35; I++){
-         J++;
-         Days_texts[I] = J;
+         Days_texts[Days_texts.length] = new Date(Monday);
+         Monday.setDate(Monday.getDate()+1);
        };
 
        var B_A = true;
 
        Text_datas.透明度 = 0.2;
 
+       var Text_Day_datas = {
+         フォント:"20px monospace"
+       };
 
        for(var I = 0; I < Days_texts.length; I++){
          if(B_A){
-           if(Days_texts[I]==1){
+           if(Days_texts[I].getDate()==1){
              Text_datas.透明度 = 1;
              B_A = false;
            };
          }
          else{
-           if(Days_texts[I]==new Date(Now).getDate()) Text_datas.カラー = "green";
+           for(var J = 0; J < Calendar_datas.length; J++){
+             Text_Day_datas.x = Text_datas.x;
+             Text_Day_datas.y = Text_datas.y + 10;
+             if(new Date(Calendar_datas[J][0]).getDate()==Days_texts[I].getDate()){
+               Text_Day_datas.y += 20;
+               Text_Day_datas.テキスト = Calendar_datas[J][1];
+               Texts(Text_Day_datas);
+             };
+           };
+           if(Days_texts[I].getDate()==new Date(Now).getDate()) Text_datas.カラー = "green";
            else Text_datas.カラー = "black";
-           if(Days_texts[I]==1){
+           if(Days_texts[I].getDate()==1){
              Text_datas.透明度 = 0.2;
            };
          };
          if(I%7==6&&Text_datas.カラー!="green") Text_datas.カラー = "red";
-         Text_datas.テキスト = Days_texts[I];
+         Text_datas.テキスト = Days_texts[I].getDate();
          Texts(Text_datas);
          Text_datas.x += 100;
          if(I%7==6){
            Text_datas.x = 10;
            Text_datas.y += 100;
          };
-       };
-
-       for(var I = 0; I < Calendar_datas.length; I++){
-         Text_datas.y += 120;
-         if(Calendar_datas[I][2]==true) Text_datas.テキスト = Calendar_datas[I][1];
-         else Text_datas.テキスト = Calendar_datas[I][0].slice(11,-3) + " " + Calendar_datas[I][1];
-         Texts(Text_datas);
        };
 
        function Texts(Datas){
