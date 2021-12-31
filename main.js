@@ -27,7 +27,7 @@ function Game_load(width,height){
          x:10,
          y:10,
          カラー:"",
-         フォント:"60px monospace"
+         フォント:"60px ゴシック"
        };
 
        Text_datas.テキスト = new Date(Now).getFullYear() + "年 " + (new Date(Now).getMonth() + 1) + "月";
