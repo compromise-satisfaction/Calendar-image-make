@@ -213,6 +213,7 @@ function Game_load(width,height){
       for(var I = 0; I < result.length; I++){
         Calendar_datas[I] = result[I];
       };
+      Calendar_datas[I] = [new Date(),"現在時刻","現在時刻"];
       core.replaceScene(StartScene());
       return;
     },);
